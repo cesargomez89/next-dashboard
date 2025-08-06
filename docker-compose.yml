@@ -1,0 +1,25 @@
+volumes:
+  db_volume:
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5434:5432"
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+  integrations-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+      - 33879:33879
+    command: npm run dev
+    entrypoint: ./entrypoint.sh
+    env_file: .env
+    depends_on:
+      - db
