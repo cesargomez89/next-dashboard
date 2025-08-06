@@ -1,6 +1,8 @@
 // app/dashboard/page.tsx
 
 import { PrismaClient } from '../generated/prisma';
+import Link from 'next/link'
+
 
 const prisma = new PrismaClient()
 
@@ -12,7 +14,9 @@ export default async function DashboardPage() {
     <ul>
       {customers.map(customer => (
         <li key={customer.id}>
-          <a href={`/customers/${customer.id}`}>{customer.name}</a>
+          <Link href={`/customers/${customer.id}`}>
+            {customer.name}
+          </Link>
         </li>
       ))}
     </ul>
